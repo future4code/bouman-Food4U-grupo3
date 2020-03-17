@@ -1,26 +1,40 @@
 import { v4 } from "uuid";
-import { SignUpDB } from "../../data/SignUpDataBase";
-import { SignUp } from "../entities/SignUp";
+import { User } from "../entities/User";
+import { UserDB } from "../../data/UserDB";
+import * as bcrypt from "bcrypt";
 
 export class SignUpUC{
     constructor(
-        private signUpDB: SignUpDB
+        private userDB: UserDB
     ){}
 
     public async execute(input: SignUpUCInput): Promise<SignUpUCOutput>{
-        const id = v4();
+        try{
+            const id = v4();
 
-        const user = new SignUp(
-            id, 
-            input.email,
-            input.password
-        )
-
-        await this.signUpDB.SignUp(user)
-
-        return {
-            message: "User Created SuccessFully"
+            if (input.password.length < 6){
+                throw new Error("Minimun password length is 6")
+            } else {
+                const hashPassword = await bcrypt.hash(input.password, 15);
+    
+                const user = new User(
+                    id, 
+                    input.email,
+                    hashPassword
+                )
+        
+                await this.userDB.SignUp(user)
+        
+                return {
+                    message: "User Created SuccessFully"
+                }
+            }
+            
+        } catch(err){
+            console.log(err)
+            throw new Error("Error. Fail User Create")
         }
+        
     }
 
 }

@@ -2,13 +2,13 @@ import knex from "knex";
 
 export abstract class BaseDB {
   protected connection = knex({
-    client: "mysql",
+    client: process.env.DB_CLIENT,
     connection: {
-      host: "ec2-18-229-236-15.sa-east-1.compute.amazonaws.com",
+      host: process.env.DB_HOST,
       port: 3306,
-      user: "brian",
+      user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: "bouman-brian"
+      database: process.env.DB_DB
     }
   });
 }
