@@ -15,7 +15,7 @@ export const CreateRecipeEndpoint = async (req: Request, res: Response) => {
             user_id: token_verify.id
         });
         
-        res.status(200).send({user: result});
+        res.status(200).send(result);
     } catch (err){
         res.status(err.errorCode || 400).send({
             message: err.message

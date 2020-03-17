@@ -3,6 +3,7 @@ import { User } from "../bussiness/entities/User";
 
 export class UserDB extends BaseDB{
     private userTableName = "user";
+    private relationTableName = "relations"
 
     private mapDBUserToUser(input?: any): User | undefined {
         return (
@@ -53,5 +54,13 @@ export class UserDB extends BaseDB{
         };
 
         return this.mapDBUserToUser(result[0][0])
+    }
+
+    public async createFollowRelation(userId: string, followerId: string): Promise<void>{
+
+        await this.connection.raw(`
+            INSERT INTO ${this.relationTableName}(userId, followerID)
+            VALUES ('${userId}', '${followerId}')
+        `)
     }
 }
