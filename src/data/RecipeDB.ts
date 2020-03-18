@@ -4,6 +4,19 @@ import { Recipe } from "../bussiness/entities/Recipe";
 export class RecipeDB extends BaseDB{
     private recipeTableName = "recipes";
 
+    private mapDBRecipeToRecipe(input?: any): Recipe | undefined {
+        return (
+            input &&
+            new Recipe(
+                input.id,
+                input.title,
+                input.description,
+                input.creation_Date,
+                input.user_id
+            )
+        )
+    }
+
     private mapDateToDbDate(input: Date): string {
         const year = input.getFullYear();
         const month = input.getMonth() + 1;
@@ -12,10 +25,6 @@ export class RecipeDB extends BaseDB{
         const minute = input.getMinutes();
         const second = input.getSeconds();
         return `${year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second }`;
-    }
-
-    private mapDbDateToDate(input: string): Date {
-        return new Date(input);
     }
 
     public async createRecipe(recipe: Recipe): Promise<void>{
@@ -29,5 +38,18 @@ export class RecipeDB extends BaseDB{
                 '${recipe.getUser_id()}'
             )
         `)
+    }
+
+    public async getAllRecipes(): Promise<Recipe[] | undefined>{
+        const result = await this.connection.raw(`
+            SELECT id, title, description, creation_Date
+            FROM recipes
+        `)
+
+        if(!result[0][0]){
+            return undefined;
+        }
+
+        return result[0].map((res:any) => this.mapDBRecipeToRecipe(res)!);
     }
 }

@@ -63,4 +63,18 @@ export class UserDB extends BaseDB{
             VALUES ('${userId}', '${followerId}')
         `)
     }
+
+    public async getAllUsers(): Promise<User[] | undefined>{
+        const result = await this.connection.raw(`
+            SELECT *
+            FROM ${this.userTableName}
+            ORDER BY email ASC
+        `)
+
+        if(!result[0][0]){
+            return undefined
+        };
+
+        return result[0].map((res:any) => this.mapDBUserToUser(res)!);
+    }
 }
