@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
-import { User } from "../entities/User";
-import { UserDB } from "../../data/UserDB";
+import { User } from "../../entities/User";
+import { UserDB } from "../../../data/UserDB";
 import * as bcrypt from "bcrypt";
 
 export class SignUpUC {
@@ -19,6 +19,8 @@ export class SignUpUC {
 
                 const user = new User(
                     id,
+                    input.name,
+                    input.birthDate,
                     input.email,
                     hashPassword
                 )
@@ -40,6 +42,8 @@ export class SignUpUC {
 }
 
 export interface SignUpUCInput {
+    name: string,
+    birthDate: Date,
     email: string,
     password: string
 }

@@ -1,6 +1,6 @@
-import { RecipeDB } from "../../data/RecipeDB";
+import { RecipeDB } from "../../../data/RecipeDB";
 import { v4 } from "uuid";
-import { Recipe } from "../entities/Recipe";
+import { Recipe } from "../../entities/Recipe";
 
 export class CreateRecipeUC {
     constructor(
@@ -16,7 +16,7 @@ export class CreateRecipeUC {
                 input.title,
                 input.description,
                 new Date(),
-                input.user_id
+                input.userId
             )
 
             await this.recipeDB.createRecipe(recipe)
@@ -36,7 +36,7 @@ export class CreateRecipeUC {
 export interface RecipeUCInput {
     title: string,
     description: string,
-    user_id: string
+    userId: string
 }
 
 export interface RecipeUCOutPut {

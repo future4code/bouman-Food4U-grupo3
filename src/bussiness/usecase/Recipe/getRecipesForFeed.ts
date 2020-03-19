@@ -1,4 +1,4 @@
-import { RecipeDB } from "../../data/RecipeDB";
+import { RecipeDB } from "../../../data/RecipeDB";
 
 export class GetRecipesForFeedUC {
     constructor(
@@ -17,9 +17,9 @@ export class GetRecipesForFeedUC {
                     id: recipe.getId(),
                     title: recipe.getTitle(),
                     description: recipe.getDescription(),
-                    creation_Date: recipe.getCreation_Date(),
-                    user_id: recipe.getUser_id(),
-                    email: recipe.getEmail()
+                    creationDate: recipe.getCreationDate(),
+                    userId: recipe.getUserId(),
+                    username: recipe.getName()
                 }
         })
     }
@@ -33,6 +33,7 @@ export interface GetRecipesForFeedUCOutputUser{
     id: string;
     title: string;
     description: string;
-    creation_Date: Date;
-    user_id: string;
+    creationDate: Date;
+    userId: string;
+    username: string;
 }

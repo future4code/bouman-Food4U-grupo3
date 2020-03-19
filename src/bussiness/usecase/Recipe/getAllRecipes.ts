@@ -1,4 +1,4 @@
-import { RecipeDB } from "../../data/RecipeDB";
+import { RecipeDB } from "../../../data/RecipeDB";
 
 export class GetAllRecipesUC {
     constructor(
@@ -17,8 +17,8 @@ export class GetAllRecipesUC {
                 id: recipe.getId(),
                 title: recipe.getTitle(),
                 description: recipe.getDescription(),
-                creation_Date: recipe.getCreation_Date(),
-                user_id: recipe.getUser_id(),
+                creationDate: recipe.getCreationDate(),
+                userId: recipe.getUserId(),
             }))
         }
     }
@@ -32,7 +32,7 @@ export interface GetAllRecipesUCOutputRecipe {
     id: string;
     title: string;
     description: string;
-    creation_Date: Date;
-    user_id: string;
+    creationDate: Date;
+    userId: string;
 
 }

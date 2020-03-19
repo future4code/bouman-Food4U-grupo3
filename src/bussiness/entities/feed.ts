@@ -5,15 +5,15 @@ export class Feed extends Recipe{
         id: string,
         title: string,
         description: string,
-        creation_Date: Date,
-        user_id: string,
-        private email: string
+        creationDate: Date,
+        userId: string,
+        private name: string
 
     ){
-        super(id, title, description, creation_Date, user_id)
+        super(id, title, description, creationDate, userId)
     }
 
-    public getEmail(){
-        return this.email
+    public getName(){
+        return this.name
     }
 }

@@ -1,6 +1,8 @@
 export class User {
     constructor(
         private id: string,
+        private name: string,
+        private birthDate: Date,
         private email: string,
         private password: string
     ) { }
@@ -11,6 +13,22 @@ export class User {
 
     public setId(id: string) {
         this.id = id
+    }
+
+    public getName(): string {
+        return this.name
+    }
+
+    public setName(name: string) {
+        this.name = name
+    }
+
+    public getBirthDate(): Date {
+        return this.birthDate
+    }
+
+    public setBirthDate(birthDate: Date) {
+        this.birthDate = birthDate
     }
 
     public getEmail(): string {

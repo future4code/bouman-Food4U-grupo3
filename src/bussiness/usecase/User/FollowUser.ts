@@ -1,4 +1,4 @@
-import { UserDB } from "../../data/UserDB";
+import { UserDB } from "../../../data/UserDB";
 
 export class FollowUserRelationUC {
     constructor(
@@ -6,7 +6,7 @@ export class FollowUserRelationUC {
     ) { }
 
     public async execute(input: FollowUserRelationUCInput): Promise<FollowUserRelationUCOutput> {
-        await this.userDB.createFollowRelation(input.userId, input.followerId)
+        await this.userDB.createFollowRelation(input.followerId, input.followedId)
 
         return {
             message: "User Followed Successfully"
@@ -15,8 +15,8 @@ export class FollowUserRelationUC {
 }
 
 export interface FollowUserRelationUCInput {
-    userId: string,
-    followerId: string
+    followerId: string,
+    followedId: string
 }
 
 export interface FollowUserRelationUCOutput {

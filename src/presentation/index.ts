@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { SignUpEndpoint } from "./endpoints/SignUp/SignUpEndpoint";
 import { LoginEndpoint } from "./endpoints/Login/LoginEndpoint";
-import { GetUserInfoEndpoint } from "./endpoints/getUserInfo/getUserInfoEndpoint";
+import { GetUserInfoEndpoint } from "./endpoints/GetUserInfo/getUserInfoEndpoint";
 import { CreateRecipeEndpoint } from './endpoints/Recipe/createRecipeEndpoint';
 import { FollowUserEndpoint } from './endpoints/FollowUser/FollowUserEndPoint';
 import { GetAllUsersEndpoint } from './endpoints/getAllUsers/getAllUsersEndpoint';

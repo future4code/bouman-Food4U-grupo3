@@ -1,22 +1,22 @@
 export class Relation {
     constructor(
-        private user_id: string,
-        private follower_id: string
+        private followerId: string,
+        private followedId: string
     ) { }
 
-    public getUser_Id(): string {
-        return this.user_id;
+    public getFollowerId(): string {
+        return this.followerId;
     }
 
-    public setUser_Id(user_id: string): void {
-        this.user_id = user_id;
+    public setFollowerId(followerId: string): void {
+        this.followerId = followerId;
     }
 
-    public getFollower_Id(): string {
-        return this.follower_id;
+    public getFollowedId(): string {
+        return this.followedId;
     }
 
-    public setFollower_Id(follower_id: string): void {
-        this.follower_id = follower_id;
+    public setFollowedId(followedId: string): void {
+        this.followedId = followedId;
     }
 }
