@@ -5,10 +5,10 @@ import { Recipe } from "../entities/Recipe";
 export class CreateRecipeUC {
     constructor(
         private recipeDB: RecipeDB
-    ){}
+    ) { }
 
-    public async execute(input: RecipeUCInput): Promise<RecipeUCOutPut>{
-        try{
+    public async execute(input: RecipeUCInput): Promise<RecipeUCOutPut> {
+        try {
             const id = v4()
             console.log("CHEGOU AQUI")
             const recipe = new Recipe(
@@ -21,24 +21,24 @@ export class CreateRecipeUC {
 
             await this.recipeDB.createRecipe(recipe)
 
-            return{
+            return {
                 message: "Recipe Created SuccessFully"
             }
 
-        } catch(err){
+        } catch (err) {
             console.log(err)
             throw new Error("Error. Fail Recipe Create")
         }
-        
+
     }
 }
 
-export interface RecipeUCInput{
+export interface RecipeUCInput {
     title: string,
     description: string,
     user_id: string
 }
 
-export interface RecipeUCOutPut{
+export interface RecipeUCOutPut {
     message: string
 }

@@ -3,16 +3,16 @@ import { UserDB } from "../../data/UserDB";
 export class GetAllUsersUC {
     constructor(
         private userDB: UserDB
-    ){}
+    ) { }
 
-    public async execute(): Promise<GetAllUsersUCOutput>{
+    public async execute(): Promise<GetAllUsersUCOutput> {
         const users = await this.userDB.getAllUsers()
 
-        if(!users){
+        if (!users) {
             throw new Error("Users not found")
         }
 
-        return{
+        return {
             users: users.map(user => ({
                 id: user.getId(),
                 email: user.getEmail()
@@ -21,11 +21,11 @@ export class GetAllUsersUC {
     }
 }
 
-export interface GetAllUsersUCOutput{
+export interface GetAllUsersUCOutput {
     users: GetAllUsersUCOutputUser[];
 }
 
-export interface GetAllUsersUCOutputUser{
+export interface GetAllUsersUCOutputUser {
     id: string;
     email: string;
 }

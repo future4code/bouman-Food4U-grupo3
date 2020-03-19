@@ -1,7 +1,7 @@
 import { BaseDB } from "./BaseDataBase";
 import { Recipe } from "../bussiness/entities/Recipe";
 
-export class RecipeDB extends BaseDB{
+export class RecipeDB extends BaseDB {
     private recipeTableName = "recipes";
 
     private mapDBRecipeToRecipe(input?: any): Recipe | undefined {
@@ -24,10 +24,10 @@ export class RecipeDB extends BaseDB{
         const hour = input.getHours();
         const minute = input.getMinutes();
         const second = input.getSeconds();
-        return `${year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second }`;
+        return `${year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second}`;
     }
 
-    public async createRecipe(recipe: Recipe): Promise<void>{
+    public async createRecipe(recipe: Recipe): Promise<void> {
         await this.connection.raw(`
             INSERT INTO ${this.recipeTableName} (id, title, description, creation_Date, user_id)
             VALUES (
@@ -40,16 +40,16 @@ export class RecipeDB extends BaseDB{
         `)
     }
 
-    public async getAllRecipes(): Promise<Recipe[] | undefined>{
+    public async getAllRecipes(): Promise<Recipe[] | undefined> {
         const result = await this.connection.raw(`
             SELECT id, title, description, creation_Date
             FROM recipes
         `)
 
-        if(!result[0][0]){
+        if (!result[0][0]) {
             return undefined;
         }
 
-        return result[0].map((res:any) => this.mapDBRecipeToRecipe(res)!);
+        return result[0].map((res: any) => this.mapDBRecipeToRecipe(res)!);
     }
 }

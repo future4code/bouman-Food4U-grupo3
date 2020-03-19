@@ -1,18 +1,18 @@
 import { UserDB } from "../../data/UserDB";
 
-export class GetUserInfoUC{
+export class GetUserInfoUC {
     constructor(
         private userDB: UserDB
-    ){}
+    ) { }
 
-    public async execute(input: GetUserInfoUCInput): Promise<GetUserInfoUCOutput>{
+    public async execute(input: GetUserInfoUCInput): Promise<GetUserInfoUCOutput> {
         const user = await this.userDB.getUserById(input.id)
 
-        if(!user){
+        if (!user) {
             throw new Error("User not found")
         }
 
-        return{
+        return {
             id: user.getId(),
             email: user.getEmail()
         }
@@ -20,11 +20,11 @@ export class GetUserInfoUC{
 
 }
 
-export interface GetUserInfoUCInput{
+export interface GetUserInfoUCInput {
     id: string
 }
 
-export interface GetUserInfoUCOutput{
+export interface GetUserInfoUCOutput {
     id: string,
     email: string
 }

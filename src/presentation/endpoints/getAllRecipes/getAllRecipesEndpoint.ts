@@ -8,14 +8,14 @@ export const GetAllRecipesEndpoint = async (req: Request, res: Response) => {
   try {
     const getAllRecipesUC = new GetAllRecipesUC(new RecipeDB());
 
-    const token_verify = jwt.verify(req.headers.authorization as string, "biotonico Fontoura") as {id: string}
+    const token_verify = jwt.verify(req.headers.authorization as string, "biotonico Fontoura") as { id: string }
 
-    if(token_verify === token_verify){
-        const result = await getAllRecipesUC.execute();
+    if (token_verify === token_verify) {
+      const result = await getAllRecipesUC.execute();
 
-        res.status(200).send(result);
+      res.status(200).send(result);
     }
-    
+
   } catch (err) {
     res.status(400).send({
       message: err.message,

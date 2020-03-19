@@ -3,15 +3,15 @@ import { UserDB } from "../../../data/UserDB";
 import { LoginUC } from "../../../bussiness/usecase/Login";
 
 export const LoginEndpoint = async (req: Request, res: Response) => {
-    try{
+    try {
         const loginUc = new LoginUC(new UserDB());
         const result = await loginUc.execute({
             email: req.body.email,
             password: req.body.password
         });
-        
+
         res.status(200).send(result);
-    } catch (err){
+    } catch (err) {
         res.status(err.errorCode || 400).send({
             message: err.message
         });
