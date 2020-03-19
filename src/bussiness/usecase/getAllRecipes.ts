@@ -17,7 +17,8 @@ export class GetAllRecipesUC {
                 id: recipe.getId(),
                 title: recipe.getTitle(),
                 description: recipe.getDescription(),
-                creation_Date: recipe.getCreation_Date()
+                creation_Date: recipe.getCreation_Date(),
+                user_id: recipe.getUser_id(),
             }))
         }
     }
@@ -32,4 +33,6 @@ export interface GetAllRecipesUCOutputRecipe{
     title: string;
     description: string;
     creation_Date: Date;
+    user_id: string;
+
 }
