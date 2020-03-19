@@ -3,8 +3,8 @@ export class Recipe {
         private id: string,
         private title: string,
         private description: string,
-        private creation_Date: Date,
-        private user_id: string
+        private creationDate: Date,
+        private userId: string
     ) { }
 
     public getId(): string {
@@ -31,19 +31,19 @@ export class Recipe {
         this.description = description;
     }
 
-    public getCreation_Date(): Date {
-        return this.creation_Date;
+    public getCreationDate(): Date {
+        return this.creationDate;
     }
 
-    public setCreation_Date(creation_Date: Date) {
-        this.creation_Date = creation_Date;
+    public setCreationDate(creationDate: Date) {
+        this.creationDate = creationDate;
     }
 
-    public getUser_id(): string {
-        return this.user_id;
+    public getUserId(): string {
+        return this.userId;
     }
 
-    public setUser_id(user_id: string) {
-        this.user_id = user_id
+    public setUserId(userId: string) {
+        this.userId = userId
     }
 }

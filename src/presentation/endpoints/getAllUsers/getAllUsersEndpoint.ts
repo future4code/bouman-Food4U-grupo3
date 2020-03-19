@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { GetAllUsersUC } from "../../../bussiness/usecase/getAllUsers";
 import { UserDB } from "../../../data/UserDB";
 import * as jwt from "jsonwebtoken";
+import { GetAllUsersUC } from "../../../bussiness/usecase/User/getAllUsers";
 
 export const GetAllUsersEndpoint = async (req: Request, res: Response) => {
   try {

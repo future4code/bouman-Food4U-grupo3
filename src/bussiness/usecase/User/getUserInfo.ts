@@ -14,6 +14,8 @@ export class GetUserInfoUC {
 
         return {
             id: user.getId(),
+            name: user.getName(),
+            birthDate: user.getBirthDate(),
             email: user.getEmail()
         }
     }
@@ -26,5 +28,7 @@ export interface GetUserInfoUCInput {
 
 export interface GetUserInfoUCOutput {
     id: string,
+    name: string,
+    birthDate: Date,
     email: string
 }

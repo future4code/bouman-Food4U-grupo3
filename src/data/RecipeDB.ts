@@ -5,7 +5,7 @@ import { Feed } from "../bussiness/entities/feed";
 export class RecipeDB extends BaseDB {
     private recipeTableName = "recipes";
     private userTableName = "user";
-    private relationTableName = "relations";
+    private relationTableName = "user_relations";
 
     private mapDBRecipeToRecipe(input?: any): Recipe | undefined {
         return (
@@ -14,8 +14,8 @@ export class RecipeDB extends BaseDB {
                 input.id,
                 input.title,
                 input.description,
-                input.creation_Date,
-                input.user_id
+                input.creationDate,
+                input.userId
             )
         )
     }
@@ -31,60 +31,66 @@ export class RecipeDB extends BaseDB {
     }
 
     public async createRecipe(recipe: Recipe): Promise<void> {
-        await this.connection.raw(`
-            INSERT INTO ${this.recipeTableName} (id, title, description, creation_Date, user_id)
+        try {
+            await this.connection.raw(`
+            INSERT INTO ${this.recipeTableName} (id, title, description, creationDate, userId)
             VALUES (
                 '${recipe.getId()}',
                 '${recipe.getTitle()}',
                 '${recipe.getDescription()}',
-                STR_TO_DATE('${this.mapDateToDbDate(recipe.getCreation_Date())}', '%Y-%m-%d %H:%i:%s'),
-                '${recipe.getUser_id()}'
+                STR_TO_DATE('${this.mapDateToDbDate(recipe.getCreationDate())}', '%Y-%m-%d %H:%i:%s'),
+                '${recipe.getUserId()}'
             )
         `)
+        } catch (err) {
+            if (err) {
+
+            }
+        }
     }
 
     public async getAllRecipes(): Promise<Recipe[] | undefined> {
         const result = await this.connection.raw(`
-            SELECT u.email, r.id, r.title, r.description, r.creation_Date, r.user_id
+            SELECT u.email, r.id, r.title, r.description, r.creationDate, r.userId
             FROM ${this.recipeTableName} r
             JOIN ${this.userTableName} u
-            ON u.id = r.user_id
-            ORDER BY user_id
+            ON u.id = r.userId
+            ORDER BY userId
         `)
 
         if (!result[0][0]) {
             return undefined;
         }
-        
+
 
         return result[0].map((res: any) => this.mapDBRecipeToRecipe(res)!);
     }
 
-    public async getRecipesForFeed(id: string): Promise <Feed[] | undefined> {
+    public async getRecipesForFeed(id: string): Promise<Feed[] | undefined> {
         const result = await this.connection.raw(`
             SELECT r.*, u.email
             FROM ${this.relationTableName} ur
             JOIN ${this.userTableName} u
             ON ur.followerId = u.id
             JOIN ${this.recipeTableName} r
-            ON ur.followerId = r.user_id
+            ON ur.followerId = r.userId
             WHERE userId = '${id}'
-            ORDER BY r.creation_Date DESC;
+            ORDER BY r.creationDate DESC;
         `)
 
-        if(!result[0][0]){
+        if (!result[0][0]) {
             return undefined;
         }
 
-        return result[0].map((recipe:any) => {
+        return result[0].map((recipe: any) => {
             return new Feed(
                 recipe.id,
                 recipe.title,
                 recipe.description,
-                recipe.creation_Date,
-                recipe.user_id,
+                recipe.creationDate,
+                recipe.userId,
                 recipe.email
             )
         })
-    }        
+    }
 }

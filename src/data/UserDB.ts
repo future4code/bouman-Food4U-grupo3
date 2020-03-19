@@ -3,24 +3,35 @@ import { User } from "../bussiness/entities/User";
 
 export class UserDB extends BaseDB {
     private userTableName = "user";
-    private relationTableName = "relations"
+    private relationTableName = "user_relations"
 
     private mapDBUserToUser(input?: any): User | undefined {
         return (
             input &&
             new User(
                 input.id,
+                input.name,
+                input.birthDate,
                 input.email,
                 input.password
             )
         )
     }
 
+    private mapDateToDbDate(input: Date): string {
+        const year = input.getFullYear();
+        const month = input.getMonth() + 1;
+        const date = input.getDate();
+        return `${year + "-" + month + "-" + date}`;
+    }
+
     public async SignUp(user: User): Promise<void> {
         await this.connection.raw(`
-            INSERT INTO ${this.userTableName} (id, email, password)
+            INSERT INTO ${this.userTableName} (id, name, birthDate, email, password)
             VALUES(
                 '${user.getId()}',
+                '${user.getName()}',
+                '${user.getBirthDate()}',
                 '${user.getEmail()}',
                 '${user.getPassword()}'
             )
@@ -44,7 +55,7 @@ export class UserDB extends BaseDB {
 
     public async getUserById(id: string): Promise<User | undefined> {
         const result = await this.connection.raw(`
-            SELECT *
+            SELECT id, name, birthDate, email
             FROM ${this.userTableName}
             WHERE id='${id}'
         `)
@@ -56,17 +67,17 @@ export class UserDB extends BaseDB {
         return this.mapDBUserToUser(result[0][0])
     }
 
-    public async createFollowRelation(userId: string, followerId: string): Promise<void> {
+    public async createFollowRelation(followerId: string, followedId: string): Promise<void> {
 
         await this.connection.raw(`
-            INSERT INTO ${this.relationTableName}(userId, followerID)
-            VALUES ('${userId}', '${followerId}')
+            INSERT INTO ${this.relationTableName}(followerId, followedId)
+            VALUES ('${followerId}', '${followedId}')
         `)
     }
 
     public async getAllUsers(): Promise<User[] | undefined> {
         const result = await this.connection.raw(`
-            SELECT *
+            SELECT id, name, birthDate, email
             FROM ${this.userTableName}
             ORDER BY email ASC
         `)
