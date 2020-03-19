@@ -19,7 +19,7 @@ export class GetRecipesForFeedUC {
                     description: recipe.getDescription(),
                     creationDate: recipe.getCreationDate(),
                     userId: recipe.getUserId(),
-                    username: recipe.getName()
+                    name: recipe.getName()
                 }
         })
     }
@@ -35,5 +35,5 @@ export interface GetRecipesForFeedUCOutputUser{
     description: string;
     creationDate: Date;
     userId: string;
-    username: string;
+    name: string;
 }

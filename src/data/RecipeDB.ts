@@ -89,7 +89,7 @@ export class RecipeDB extends BaseDB {
                 recipe.description,
                 recipe.creationDate,
                 recipe.userId,
-                recipe.email
+                recipe.name
             )
         })
     }
