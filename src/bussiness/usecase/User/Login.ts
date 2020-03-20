@@ -25,7 +25,9 @@ export class LoginUC {
             throw new Error("Wrong Password")
         }
 
-        const token = jwt.sign({ id: user.getId() }, "biotonico Fontoura", {
+        const jwtSecret:string = process.env.JWT_SECRET || "";
+
+        const token = jwt.sign({ id: user.getId() }, jwtSecret, {
             expiresIn: '1h'
         })
 

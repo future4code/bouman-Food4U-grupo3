@@ -7,7 +7,9 @@ export const UpdateUserDataEndpoint = async (req: Request, res: Response) => {
     try {
         const updateUserDataUC = new UpdateUserDataUC(new UserDB());
 
-        const token_verify = jwt.verify(req.headers.authorization as string, "biotonico Fontoura") as { id: string }
+        const jwtSecret:string = process.env.JWT_SECRET || "";
+        
+        const token_verify = jwt.verify(req.headers.authorization as string, jwtSecret) as { id: string }
 
         const result = await updateUserDataUC.execute({
             id: token_verify.id,

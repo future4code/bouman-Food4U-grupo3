@@ -1,6 +1,4 @@
 import { UserDB } from "../../../data/UserDB";
-import { User } from "../../entities/User";
-import * as bcrypt from 'bcrypt'
 
 export class UpdateUserDataUC {
     constructor(
