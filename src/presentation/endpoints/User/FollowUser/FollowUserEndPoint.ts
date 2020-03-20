@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import { FollowUserRelationUC } from "../../../bussiness/usecase/User/FollowUser";
-import { UserDB } from "../../../data/UserDB";
+import { FollowUserRelationUC } from "../../../../bussiness/usecase/User/FollowUser";
+import { UserDB } from "../../../../data/UserDB";
 
 export const FollowUserEndpoint = async (req: Request, res: Response) => {
     try {

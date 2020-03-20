@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import { CreateRecipeUC } from "../../../bussiness/usecase/Recipe/CreateRecipe";
-import { RecipeDB } from "../../../data/RecipeDB";
+import { CreateRecipeUC } from "../../../../bussiness/usecase/Recipe/CreateRecipe";
+import { RecipeDB } from "../../../../data/RecipeDB";
 
 export const CreateRecipeEndpoint = async (req: Request, res: Response) => {
     try {

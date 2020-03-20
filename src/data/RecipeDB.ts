@@ -68,13 +68,13 @@ export class RecipeDB extends BaseDB {
 
     public async getRecipesForFeed(id: string): Promise<Feed[] | undefined> {
         const result = await this.connection.raw(`
-            SELECT r.*, u.email
+            SELECT r.*, u.name
             FROM ${this.relationTableName} ur
             JOIN ${this.userTableName} u
-            ON ur.followerId = u.id
+            ON ur.followedId = u.id
             JOIN ${this.recipeTableName} r
-            ON ur.followerId = r.userId
-            WHERE userId = '${id}'
+            ON ur.followedId = r.userId
+            WHERE followerId = '${id}'
             ORDER BY r.creationDate DESC;
         `)
 
@@ -89,7 +89,7 @@ export class RecipeDB extends BaseDB {
                 recipe.description,
                 recipe.creationDate,
                 recipe.userId,
-                recipe.email
+                recipe.name
             )
         })
     }
