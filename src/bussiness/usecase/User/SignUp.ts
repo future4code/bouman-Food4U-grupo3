@@ -12,15 +12,24 @@ export class SignUpUC {
         try {
             const id = v4();
 
+            const birthDate = new Date(input.birthDate + " 00:00");
+
             if (input.password.length < 6) {
                 throw new Error("Minimun password length is 6")
+
+            } else if (input.email.indexOf("@") === -1){
+                throw new Error("Invalid email");
+
+            } else if (Object.is(birthDate.getFullYear(), NaN)) {
+                throw new Error("Invalid date");
+
             } else {
                 const hashPassword = await bcrypt.hash(input.password, 15);
 
                 const user = new User(
                     id,
                     input.name,
-                    input.birthDate,
+                    birthDate,
                     input.email,
                     hashPassword
                 )
@@ -34,7 +43,7 @@ export class SignUpUC {
 
         } catch (err) {
             console.log(err)
-            throw new Error("Error. Fail User Create")
+            throw new Error(`Error. Fail User Create. ${err}`)
         }
 
     }

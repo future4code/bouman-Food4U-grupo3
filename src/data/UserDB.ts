@@ -18,13 +18,6 @@ export class UserDB extends BaseDB {
         )
     }
 
-    private mapDateToDbDate(input: Date): string {
-        const year = input.getFullYear();
-        const month = input.getMonth() + 1;
-        const date = input.getDate();
-        return `${year + "-" + month + "-" + date}`;
-    }
-
     public async SignUp(user: User): Promise<void> {
         await this.connection.raw(`
             INSERT INTO ${this.userTableName} (id, name, birthDate, email, password)
@@ -93,6 +86,14 @@ export class UserDB extends BaseDB {
         await this.connection.raw(`
             UPDATE ${this.userTableName}
             SET password = '${password}'
+            WHERE id='${id}'
+        `)
+    }
+
+    public async updateUserData(id: string, name: string, birthDate: Date, email: string): Promise<void>{
+        await this.connection.raw(`
+            UPDATE ${this.userTableName}
+            SET name = '${name}', birthDate = '${birthDate}', email = '${email}'
             WHERE id='${id}'
         `)
     }
