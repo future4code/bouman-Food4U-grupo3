@@ -7,23 +7,43 @@ export class UpdateUserPasswordUC {
         private userDB: UserDB
     ) { }
 
-    public async execute(input: UpdateUserPasswordUCInput): Promise<UpdateUserPasswordUCOutput | undefined> {
+    public async execute(input: UpdateUserPasswordUCInput): Promise<UpdateUserPasswordUCOutput> {
 
         try{
-           
-            if (input.password.length < 6) {
+
+            let message: string = "" 
+
+            const user = await this.userDB.getUserById(input.id)
+
+            if (!user) {
+                throw new Error("user not found")
+            }
+
+
+            const comparePassword = await bcrypt.compare(input.currentPassword, user.getPassword())
+
+            if (!comparePassword) {
+                throw new Error("Wrong Password")
+                
+            } 
+
+            
+            if (input.newPassword.length < 6) {
                 throw new Error("Minimun password length is 6.")
         
-            } else {
+            } 
+                    
+            const newHashPassword = await bcrypt.hash(input.newPassword, 15);
 
-                const newHashPassword = await bcrypt.hash(input.password, 15);
-    
-                await this.userDB.updateUserPassword(input.id, newHashPassword)
-             
-                return {
-                    message: "User Password Updated Successfully!"
-                }
+            await this.userDB.updateUserPassword(input.id, newHashPassword)
+
+            message = "Password updated successfully"        
+                
+            return {
+                message: `${message}`
             }
+                
+
         } catch (err){
             throw new Error(`Password update failed. ${err}`)
         }  
@@ -32,7 +52,8 @@ export class UpdateUserPasswordUC {
 
 export interface UpdateUserPasswordUCInput {
     id: string,
-    password: string,
+    currentPassword: string,
+    newPassword: string,
 }
 
 export interface UpdateUserPasswordUCOutput {

@@ -11,7 +11,8 @@ export const UpdateUserPasswordEndpoint = async (req: Request, res: Response) =>
 
         const result = await updateUserPasswordUC.execute({
             id: token_verify.id,
-            password: req.body.password
+            currentPassword: req.body.currentPassword,
+            newPassword: req.body.newPassword
         });
 
         res.status(200).send(result);

@@ -82,10 +82,10 @@ export class UserDB extends BaseDB {
         return result[0].map((res: any) => this.mapDBUserToUser(res)!);
     }
 
-    public async updateUserPassword(id: string, password: string): Promise<void>{
+    public async updateUserPassword(id: string, newPassword: string): Promise<void>{
         await this.connection.raw(`
             UPDATE ${this.userTableName}
-            SET password = '${password}'
+            SET password = '${newPassword}'
             WHERE id='${id}'
         `)
     }

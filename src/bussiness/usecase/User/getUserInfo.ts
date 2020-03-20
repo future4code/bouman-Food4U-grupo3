@@ -1,4 +1,4 @@
-import { UserDB } from "../../data/UserDB";
+import { UserDB } from "../../../data/UserDB";
 
 export class GetUserInfoUC {
     constructor(
