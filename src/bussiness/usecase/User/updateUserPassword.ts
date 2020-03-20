@@ -7,25 +7,32 @@ export class UpdateUserPasswordUC {
         private userDB: UserDB
     ) { }
 
-    public async execute(input: UpdateUserPasswordUCInput): Promise<UpdateUserPasswordUCOutput> {
+    public async execute(input: UpdateUserPasswordUCInput): Promise<UpdateUserPasswordUCOutput | undefined> {
 
-        if (input.password.length < 6) {
-            throw new Error("Minimun password length is 6")
-        } else {
-            const hashPassword = await bcrypt.hash(input.password, 15);
+        try{
+           
+            if (input.password.length < 6) {
+                throw new Error("Minimun password length is 6.")
+        
+            } else {
 
-            await this.userDB.updateUserPassword(input.id, hashPassword)
-
-            return {
-                message: "User Password Updated Successfully"
+                const newHashPassword = await bcrypt.hash(input.password, 15);
+    
+                await this.userDB.updateUserPassword(input.id, newHashPassword)
+             
+                return {
+                    message: "User Password Updated Successfully!"
+                }
             }
-        }
+        } catch (err){
+            throw new Error(`Password update failed. ${err}`)
+        }  
     }
 }
 
 export interface UpdateUserPasswordUCInput {
     id: string,
-    password: string
+    password: string,
 }
 
 export interface UpdateUserPasswordUCOutput {

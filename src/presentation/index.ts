@@ -8,18 +8,25 @@ import { GetAllUsersEndpoint } from './endpoints/User/GetAllUsers/getAllUsersEnd
 import { GetAllRecipesEndpoint } from "./endpoints/Recipe/GetAllRecipes/getAllRecipesEndpoint";
 import { GetRecipesForFeedEndpoint } from "./endpoints/Recipe/GetRecipesForFeed/getRecipesForFeedEndpoint";
 import { UpdateUserPasswordEndpoint } from "./endpoints/User/UpdateUserPassword/UpdateUserPasswordEndpoint";
+import { UpdateUserDataEndpoint } from "./endpoints/User/UpdateUserData/UpdateUserDataEndPoint";
 
 const app = express();
 app.use(express.json());
 
+// send data
 app.post("/signup", SignUpEndpoint);
 app.post("/login", LoginEndpoint);
-app.get("/getUser", GetUserInfoEndpoint);
 app.post("/recipe", CreateRecipeEndpoint);
 app.post("/user/follow", FollowUserEndpoint);
+
+// get data
+app.get("/getUser", GetUserInfoEndpoint);
 app.get("/getAllUsers", GetAllUsersEndpoint);
 app.get("/recipes", GetAllRecipesEndpoint);
 app.get("/feed", GetRecipesForFeedEndpoint);
-app.put("/user/updatePassword", UpdateUserPasswordEndpoint)
+
+// update data
+app.put("/user/updatePassword", UpdateUserPasswordEndpoint);
+app.put("/user/updateData", UpdateUserDataEndpoint);
 
 export default app;
