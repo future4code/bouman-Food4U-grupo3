@@ -27,6 +27,6 @@ app.get("/feed", GetRecipesForFeedEndpoint);
 
 // update data
 app.post("/user/updatePassword", UpdateUserPasswordEndpoint);
-app.put("/user/updateData", UpdateUserDataEndpoint);
+app.post("/user/updateData", UpdateUserDataEndpoint);
 
 export default app;

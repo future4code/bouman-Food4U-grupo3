@@ -5,6 +5,13 @@ export class UserDB extends BaseDB {
     private userTableName = "user";
     private relationTableName = "user_relations"
 
+    private mapDateToDbDate(input: Date): string {
+        const year = input.getFullYear();
+        const month = input.getMonth() + 1;
+        const date = input.getDate();
+        return `${year + "-" + month + "-" + date}`;
+      }
+
     private mapDBUserToUser(input?: any): User | undefined {
         return (
             input &&
@@ -48,7 +55,7 @@ export class UserDB extends BaseDB {
 
     public async getUserById(id: string): Promise<User | undefined> {
         const result = await this.connection.raw(`
-            SELECT id, name, birthDate, email
+            SELECT id, name, birthDate, email, password
             FROM ${this.userTableName}
             WHERE id='${id}'
         `)
@@ -93,7 +100,7 @@ export class UserDB extends BaseDB {
     public async updateUserData(id: string, name: string, birthDate: Date, email: string): Promise<void>{
         await this.connection.raw(`
             UPDATE ${this.userTableName}
-            SET name = '${name}', birthDate = '${birthDate}', email = '${email}'
+            SET name = '${name}', birthDate = STR_TO_DATE('${this.mapDateToDbDate(birthDate)}', '%Y-%m-%d'), email = '${email}'
             WHERE id='${id}'
         `)
     }
